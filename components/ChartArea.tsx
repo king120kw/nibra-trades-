@@ -7,10 +7,7 @@ import {
     ISeriesApi, 
     IChartApi, 
     UTCTimestamp,
-    Time,
-    AreaSeries,
-    LineSeries,
-    CandlestickSeries
+    Time
 } from 'lightweight-charts';
 import { Lock, Trash2 } from 'lucide-react';
 import { Candle, ChartType, DrawingTool, Drawing, Timeframe, ChartSettings } from '../types';
@@ -29,7 +26,7 @@ const ChartArea: React.FC<ChartAreaProps> = ({
   symbol, 
   chartType, 
   activeTool, 
-  timeframe,
+  timeframe, 
   settings,
   drawings,
   setDrawings
@@ -153,21 +150,22 @@ const ChartArea: React.FC<ChartAreaProps> = ({
         setCurrentPrice(data[data.length - 1].close);
     }
 
-    // V5 API USAGE (addSeries)
+    // V4.1 API USAGE (Factory Methods)
+    // FIX: Use chart.addSeries with seriesType for all chart types.
     if (chartType === 'Area') {
-        newSeries = chart.addSeries(AreaSeries, { 
+        newSeries = chart.addAreaSeries({ // <-- Correct v4 method
             lineColor: '#2962ff', 
             topColor: '#2962ff', 
             bottomColor: 'rgba(41, 98, 255, 0.28)' 
         });
         newSeries.setData(data.map(d => ({ time: d.time, value: d.close })));
     } else if (chartType === 'Line') {
-        newSeries = chart.addSeries(LineSeries, { 
+        newSeries = chart.addLineSeries({ // <-- Correct v4 method
             color: '#2962ff' 
         });
         newSeries.setData(data.map(d => ({ time: d.time, value: d.close })));
     } else {
-        newSeries = chart.addSeries(CandlestickSeries, {
+        newSeries = chart.addCandlestickSeries({ // <-- Correct v4 method
             upColor: settings.candleUpColor,
             downColor: settings.candleDownColor,
             wickUpColor: settings.wickUpColor,
