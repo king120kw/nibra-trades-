@@ -153,7 +153,7 @@ const ChartArea: React.FC<ChartAreaProps> = ({
         setCurrentPrice(data[data.length - 1].close);
     }
 
-    // V5 API USAGE (Factory Methods)
+    // V5 API USAGE (addSeries)
     if (chartType === 'Area') {
         newSeries = chart.addSeries(AreaSeries, { 
             lineColor: '#2962ff', 
